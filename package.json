@@ -15,6 +15,7 @@
     "up": "drizzle-kit up:pg"
   },
   "dependencies": {
+    "@radix-ui/react-slot": "^1.0.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "dotenv": "^16.3.1",
@@ -37,6 +38,8 @@
     "eslint": "^8",
     "eslint-config-next": "14.0.2",
     "postcss": "^8",
+    "prettier": "^3.1.0",
+    "prettier-plugin-tailwindcss": "^0.5.7",
     "tailwindcss": "^3.3.0",
     "typescript": "^5"
   }
