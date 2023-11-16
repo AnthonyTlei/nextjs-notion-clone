@@ -6,7 +6,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FormSchema } from "@/lib/types";
+import { LoginFormSchema } from "@/lib/validation/forms";
 import {
   Form,
   FormControl,
@@ -27,14 +27,14 @@ const LoginPage = () => {
   const router = useRouter();
   const [submitError, setSubmitError] = useState("");
 
-  const form = useForm<z.infer<typeof FormSchema>>({
+  const form = useForm<z.infer<typeof LoginFormSchema>>({
     mode: "onChange",
-    resolver: zodResolver(FormSchema),
+    resolver: zodResolver(LoginFormSchema),
     defaultValues: { email: "", password: "" },
   });
 
   const isLoading = form.formState.isSubmitting;
-  const onSubmit: SubmitHandler<z.infer<typeof FormSchema>> = async (
+  const onSubmit: SubmitHandler<z.infer<typeof LoginFormSchema>> = async (
     formData,
   ) => {
     const { error } = await actionLoginUser(formData);

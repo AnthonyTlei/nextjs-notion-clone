@@ -3,12 +3,12 @@
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { z } from "zod";
-import { FormSchema } from "../types";
+import { LoginFormSchema } from "../validation/forms";
 
 export async function actionLoginUser({
   email,
   password,
-}: z.infer<typeof FormSchema>) {
+}: z.infer<typeof LoginFormSchema>) {
   const supabase = createRouteHandlerClient({ cookies });
   const response = await supabase.auth.signInWithPassword({ email, password });
   return response;
@@ -17,7 +17,7 @@ export async function actionLoginUser({
 export async function actionRegisterUser({
   email,
   password,
-}: z.infer<typeof FormSchema>) {
+}: z.infer<typeof LoginFormSchema>) {
   const supabase = createRouteHandlerClient({ cookies });
   const { data } = await supabase
     .from("profiles")
@@ -29,7 +29,6 @@ export async function actionRegisterUser({
     email,
     password,
     options: {
-      // TODO: Fix registration redirect
       emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}api/auth/callback`,
     },
   });

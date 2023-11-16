@@ -21,30 +21,12 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { MailCheck } from "lucide-react";
-import { FormSchema } from "@/lib/types";
+import { LoginFormSchema, RegisterFormSchema } from "@/lib/validation/forms";
 import { actionRegisterUser } from "@/lib/server-actions/auth-actions";
 
 import Logo from "../../../../public/cypresslogo.svg";
 
-const SignUpFormSchema = z
-  .object({
-    email: z.string().describe("Email").email({ message: "Invalid Email" }),
-    password: z
-      .string()
-      .describe("Password")
-      .min(6, "Password must be minimum 6 characters"),
-    confirmPassword: z
-      .string()
-      .describe("Confirm Password")
-      .min(6, "Password must be minimum 6 characters"),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords don't match.",
-    path: ["confirmPassword"],
-  });
-
-const Signup = () => {
-  const router = useRouter();
+const Register = () => {
   const searchParams = useSearchParams();
   const [submitError, setSubmitError] = useState("");
   const [confirmation, setConfirmation] = useState(false);
@@ -64,14 +46,18 @@ const Signup = () => {
     [codeExchangeError],
   );
 
-  const form = useForm<z.infer<typeof SignUpFormSchema>>({
+  const form = useForm<z.infer<typeof RegisterFormSchema>>({
     mode: "onChange",
-    resolver: zodResolver(SignUpFormSchema),
+    resolver: zodResolver(RegisterFormSchema),
     defaultValues: { email: "", password: "", confirmPassword: "" },
   });
 
   const isLoading = form.formState.isSubmitting;
-  const onSubmit = async ({ email, password }: z.infer<typeof FormSchema>) => {
+  
+  const onSubmit = async ({
+    email,
+    password,
+  }: z.infer<typeof LoginFormSchema>) => {
     const { error } = await actionRegisterUser({ email, password });
     if (error) {
       setSubmitError(error.message);
@@ -175,4 +161,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default Register;
