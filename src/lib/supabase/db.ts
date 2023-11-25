@@ -11,17 +11,17 @@ if (!process.env.DATABASE_URL) {
 
 const client = postgres(process.env.DATABASE_URL as string, { max: 1 });
 const db = drizzle(client, { schema });
-// const migrateDb = async () => {
-//   try {
-//     console.log("🟨 Migrating client");
-//     await migrate(db, { migrationsFolder: "migrations" });
-//     await client.end();
-//     console.log("🟩 Finished Migrating client");
-//   } catch (e) {
-//     console.log("🟥 Error Migrating client");
-//     console.log(e);
-//   }
-// };
+const migrateDb = async () => {
+  try {
+    console.log("🟨 Migrating client");
+    await migrate(db, { migrationsFolder: "migrations" });
+    await client.end();
+    console.log("🟩 Finished Migrating client");
+  } catch (e) {
+    console.log("🟥 Error Migrating client");
+    console.log(e);
+  }
+};
 
 // migrateDb();
 
