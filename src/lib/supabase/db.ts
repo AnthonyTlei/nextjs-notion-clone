@@ -9,6 +9,7 @@ if (!process.env.DATABASE_URL) {
   console.log("🟥 DATABASE_URL is not set");
 }
 
+// TODO : Replace with a connection pool (drizzle)
 const client = postgres(process.env.DATABASE_URL as string, { max: 1 });
 const db = drizzle(client, { schema });
 const migrateDb = async () => {
