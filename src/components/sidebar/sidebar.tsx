@@ -10,6 +10,8 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { twMerge } from "tailwind-merge";
 import WorkspaceDropdown from "./workspace-dropdown";
+import PlanUsage from "./plan-usage";
+import NativeNavigation from "./native-navigation";
 
 interface SidebarProps {
   params: { workspaceId: string };
@@ -53,6 +55,11 @@ const Sidebar = async ({ params, className }: SidebarProps) => {
             ...sharedWorkspaces,
           ].find((workspace) => workspace.id === params.workspaceId)}
         />
+        <PlanUsage
+          foldersLength={workspaceFolderData?.length || 0}
+          subscription={subscriptionData}
+        />
+        <NativeNavigation myWorkspaceId={params.workspaceId} />
       </div>
     </aside>
   );
