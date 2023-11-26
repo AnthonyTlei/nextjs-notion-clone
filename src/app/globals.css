@@ -7,6 +7,30 @@ body {
   height: 100%;
 }
 
+/* Styling the scrollbar track */
+::-webkit-scrollbar-track {
+  background: transparent; /* Optional: could be set to a different color */
+  border-radius: 10px; /* Rounded corners for the track */
+}
+
+/* Styling the scrollbar thumb */
+::-webkit-scrollbar-thumb {
+  background: #888; /* Thumb color */
+  border-radius: 10px; /* Rounded corners for the thumb */
+}
+
+/* Styling the scrollbar thumb on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Darker color on hover */
+}
+
+/* Setting the width of the scrollbar */
+::-webkit-scrollbar {
+  width: 6px; /* Slimmer scrollbar */
+  height: 6px; /* For horizontal scroll */
+  /* display: none; */
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -74,4 +98,60 @@ body {
   to {
     transform: translateX(-100%);
   }
+}
+
+.ce-popover-item:hover {
+  @apply bg-muted/40 transition-all !important;
+}
+
+.ce-popover--opened {
+  @apply border-border bg-card outline-none dark:text-muted;
+}
+
+.ce-popover-item__icon {
+  @apply font-medium text-white shadow-none dark:border-[1px] dark:bg-background !important;
+}
+
+.ce-popover-item__title {
+  @apply font-normal dark:text-Neutrals/neutrals-7;
+}
+
+.cdx-search-field {
+  @apply bg-background;
+}
+
+.ce-toolbar__content,
+.ce-block__content {
+  max-width: 750px;
+}
+
+.editorFocus {
+  @apply border-none outline-none;
+}
+
+/* .dotPattern {
+  background-image: radial-gradient(rgb(25, 25, 25) 1px, transparent 1px);
+  background-size: 30px 30px;
+} */
+
+.ql-toolbar::-webkit-scrollbar {
+  display: none;
+}
+
+.ql-toolbar {
+  @apply sticky left-0 right-0 top-0 z-40 flex flex-wrap items-center justify-center !border-none bg-white/40 backdrop-blur-md dark:bg-background/70;
+}
+
+.ql-formats {
+  @apply flex flex-shrink-0;
+}
+
+.ql-container {
+  @apply !border-none;
+}
+
+.ql-editor > p,
+ol,
+ul {
+  @apply dark:text-washed-purple-700;
 }
