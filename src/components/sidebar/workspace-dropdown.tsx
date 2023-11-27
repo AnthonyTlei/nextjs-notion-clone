@@ -24,6 +24,11 @@ const WorkspaceDropdown = ({
   const [selectedOption, setSelectedOption] = useState(defaultValue);
   const [isOpen, setIsOpen] = useState(false);
 
+  const handleSelect = (option: workspace) => {
+    setSelectedOption(option);
+    setIsOpen(false);
+  };
+
   useEffect(() => {
     if (!state.workspaces.length) {
       dispatch({
@@ -39,10 +44,12 @@ const WorkspaceDropdown = ({
     }
   }, [privateWorkspaces, sharedWorkspaces, collaboratingWorkspaces]);
 
-  const handleSelect = (option: workspace) => {
-    setSelectedOption(option);
-    setIsOpen(false);
-  };
+  useEffect(() => {
+    const findSelectedWorkspace = state.workspaces.find(
+      (workspace) => workspace.id === defaultValue?.id,
+    );
+    if (findSelectedWorkspace) setSelectedOption(findSelectedWorkspace);
+  }, [state, defaultValue]);
 
   return (
     <div className="relative inline-block text-left">
