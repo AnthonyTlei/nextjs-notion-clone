@@ -125,7 +125,7 @@ const Header = () => {
                 <ListItem title="Pro Plan" href={"#"}>
                   Unlock full power with collaboration.
                 </ListItem>
-                <ListItem title={"free Plan"} href={"#"}>
+                <ListItem title={"Free Plan"} href={"#"}>
                   Great for teams just starting out.
                 </ListItem>
               </ul>
@@ -160,15 +160,20 @@ const Header = () => {
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
-      {/* // TODO: Make mobile responsive */}
       <aside className="flex w-full justify-end gap-2 ">
         <Link href={"/login"}>
-          <Button variant="btn-secondary" className=" hidden p-1 sm:block">
+          <Button
+            variant="btn-secondary"
+            className="p-1 text-sm sm:block sm:text-lg"
+          >
             Login
           </Button>
         </Link>
         <Link href={"/register"}>
-          <Button variant="btn-primary" className="whitespace-nowrap">
+          <Button
+            variant="btn-primary"
+            className="whitespace-nowrap text-sm sm:text-lg"
+          >
             Register
           </Button>
         </Link>

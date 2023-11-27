@@ -45,8 +45,6 @@ export const SupabaseUserProvider = ({
         data: { user },
       } = await supabase.auth.getUser();
       if (user) {
-        // TODO: Remove logging user
-        console.log(user);
         setUser(user);
         const { data, error } = await getUserSubscriptionStatus(user.id);
         if (data) setSubscription(data);

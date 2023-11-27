@@ -29,7 +29,7 @@ const HomePage = () => {
             Get Cypress Free
           </Button>
         </div>
-        <div className="relative ml-[-50px] mt-[-40px] flex w-[750px] items-center justify-center sm:ml-0 sm:w-full md:mt-[-90px]">
+        <div className="relative ml-[-30%] mt-[-50px] flex w-[650px] items-center justify-center sm:ml-0 sm:w-full md:mt-[-90px]">
           <Image src={Banner} alt="Application Banner" />
           <div className="top-50% absolute bottom-0 left-0 right-0 z-10 bg-gradient-to-t dark:from-background" />
         </div>
@@ -128,27 +128,8 @@ const HomePage = () => {
       </section>
 
       <section className="relative">
-        <div
-          className="-z-100
-          absolute
-          top-56
-          h-32
-          w-full
-          rounded-full
-          bg-brand-primaryPurple/50
-          blur-[120px]
-        "
-        />
-        <div
-          className="mt-20
-          flex
-          flex-col 
-          overflow-visible
-          overflow-x-hidden
-          px-4
-          sm:px-6
-        "
-        >
+        <div className="-z-100 absolute top-56 h-32 w-full rounded-full bg-brand-primaryPurple/50 blur-[120px]" />
+        <div className="mt-20 flex flex-col  overflow-visible overflow-x-hidden px-4 sm:px-6">
           <TitleSection
             title="Trusted by all"
             subheading="Join thousands of satisfied users who rely on our platform for their 

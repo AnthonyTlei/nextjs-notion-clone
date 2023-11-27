@@ -161,8 +161,7 @@ const DashboardSetup = ({ user, subscription }: DashboardSetupProps) => {
                 type="file"
                 accept="image/*"
                 placeholder="Workspace Name"
-                // TODO: Enable this when we have pro plan implementation
-                // disabled={isLoading || subscription?.status !== 'active'}
+                disabled={isLoading || subscription?.status !== "active"}
                 {...register("logo", {
                   required: false,
                 })}
