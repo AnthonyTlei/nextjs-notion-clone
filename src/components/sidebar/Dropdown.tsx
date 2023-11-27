@@ -64,7 +64,8 @@ const Dropdown = ({
     }
   }, [state, listType, workspaceId, id, title]);
 
-  const navigatatePage = (accordionId: string, type: string) => {
+  // TODO : Fix bug, if file is clicked, in path, folderId is undefined
+  const navigatePage = (accordionId: string, type: string) => {
     if (type === "folder") {
       router.push(`/dashboard/${workspaceId}/${accordionId}`);
     }
@@ -215,12 +216,12 @@ const Dropdown = ({
         toast({
           title: "Error",
           variant: "destructive",
-          description: "Could not move the folder to trash",
+          description: "Could not move the file to trash",
         });
       } else {
         toast({
           title: "Success",
-          description: "Moved folder to trash",
+          description: "Moved file to trash",
         });
       }
     }
@@ -295,7 +296,7 @@ const Dropdown = ({
       className={listStyles}
       onClick={(e) => {
         e.stopPropagation();
-        navigatatePage(id, listType);
+        navigatePage(id, listType);
       }}
     >
       <AccordionTrigger

@@ -1,5 +1,7 @@
 "use client";
 
+// TODO : Fix bug, create folder, create file, move folder trash, delete folder from quill editor popup, usage still counted.
+
 import { MAX_FOLDERS_FREE_PLAN } from "@/lib/constants";
 import { useAppState } from "@/lib/providers/state-provider";
 import { Subscription } from "@/lib/supabase/supabase.types";

@@ -50,6 +50,10 @@ type Action =
       };
     }
   | {
+      type: "DELETE_FOLDER";
+      payload: { workspaceId: string; folderId: string };
+    }
+  | {
       type: "SET_FILES";
       payload: { workspaceId: string; files: File[]; folderId: string };
     }
@@ -65,6 +69,10 @@ type Action =
         workspaceId: string;
         fileId: string;
       };
+    }
+  | {
+      type: "DELETE_FILE";
+      payload: { workspaceId: string; folderId: string; fileId: string };
     };
 
 const initialState: AppState = { workspaces: [] };
@@ -156,6 +164,21 @@ const appReducer = (
           return workspace;
         }),
       };
+    case "DELETE_FOLDER":
+      return {
+        ...state,
+        workspaces: state.workspaces.map((workspace) => {
+          if (workspace.id === action.payload.workspaceId) {
+            return {
+              ...workspace,
+              folders: workspace.folders.filter(
+                (folder) => folder.id !== action.payload.folderId,
+              ),
+            };
+          }
+          return workspace;
+        }),
+      };
     case "SET_FILES":
       return {
         ...state,
@@ -222,6 +245,29 @@ const appReducer = (
                       }
                       return file;
                     }),
+                  };
+                }
+                return folder;
+              }),
+            };
+          }
+          return workspace;
+        }),
+      };
+    case "DELETE_FILE":
+      return {
+        ...state,
+        workspaces: state.workspaces.map((workspace) => {
+          if (workspace.id === action.payload.workspaceId) {
+            return {
+              ...workspace,
+              folder: workspace.folders.map((folder) => {
+                if (folder.id === action.payload.folderId) {
+                  return {
+                    ...folder,
+                    files: folder.files.filter(
+                      (file) => file.id !== action.payload.fileId,
+                    ),
                   };
                 }
                 return folder;
