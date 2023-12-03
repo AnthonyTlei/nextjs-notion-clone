@@ -11,7 +11,7 @@ import {
   updateFile,
   updateFolder,
 } from "@/lib/supabase/queries";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 interface QuillEditorProps {
   dirDetails: File | Folder | workspace;
@@ -41,6 +41,7 @@ var TOOLBAR_OPTIONS = [
 
 const QuillEditor = ({ dirDetails, fileId, dirType }: QuillEditorProps) => {
   const router = useRouter();
+  const pathname = usePathname();
   const { state, workspaceId, folderId, dispatch } = useAppState();
   const [quill, setQuill] = useState<any>(null);
 
@@ -76,6 +77,40 @@ const QuillEditor = ({ dirDetails, fileId, dirType }: QuillEditorProps) => {
       bannerUrl: dirDetails.bannerUrl,
     } as workspace | Folder | File;
   }, [state, workspaceId, folderId]);
+
+  const breadCrumbs = useMemo(() => {
+    if (!pathname || !state.workspaces || !workspaceId) return;
+    const segments = pathname
+      .split("/")
+      .filter((val) => val !== "dashboard" && val);
+    const workspaceDetails = state.workspaces.find(
+      (workspace) => workspace.id === workspaceId,
+    );
+    const workspaceBreadCrumb = workspaceDetails
+      ? `${workspaceDetails.iconId} ${workspaceDetails.title}`
+      : "";
+    if (segments.length === 1) {
+      return workspaceBreadCrumb;
+    }
+    const folderSegment = segments[1];
+    const folderDetails = workspaceDetails?.folders.find(
+      (folder) => folder.id === folderSegment,
+    );
+    const folderBreadCrumb = folderDetails
+      ? `/ ${folderDetails.iconId} ${folderDetails.title}`
+      : "";
+    if (segments.length === 2) {
+      return `${workspaceBreadCrumb} ${folderBreadCrumb}`;
+    }
+    const fileSegment = segments[2];
+    const fileDetails = folderDetails?.files.find(
+      (file) => file.id === fileSegment,
+    );
+    const fileBreadCrumb = fileDetails
+      ? `/ ${fileDetails.iconId} ${fileDetails.title}`
+      : "";
+    return `${workspaceBreadCrumb} ${folderBreadCrumb} ${fileBreadCrumb}`;
+  }, [state, pathname, workspaceId]);
 
   const wrapperRef = useCallback(async (wrapper: any) => {
     if (typeof window !== "undefined") {
@@ -163,6 +198,9 @@ const QuillEditor = ({ dirDetails, fileId, dirType }: QuillEditorProps) => {
             <span className="text-sm text-white">{details.inTrash}</span>
           </article>
         )}
+        <div className="flex flex-col-reverse justify-center p-8 sm:flex-row sm:items-center sm:justify-between sm:p-2">
+          <div>{breadCrumbs}</div>
+        </div>
       </div>
       <div className="relative mt-2 flex flex-col items-center justify-center">
         <div id="container" ref={wrapperRef} className="max-w-[800px]"></div>
