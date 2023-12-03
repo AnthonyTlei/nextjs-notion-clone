@@ -15,6 +15,13 @@
       "when": 1701008060583,
       "tag": "0001_awesome_iron_man",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1701635746723,
+      "tag": "0002_loving_tombstone",
+      "breakpoints": true
     }
   ]
 }
