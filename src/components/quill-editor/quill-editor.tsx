@@ -335,14 +335,9 @@ const QuillEditor = ({ dirDetails, fileId, dirType }: QuillEditorProps) => {
   }, [socket, quill, fileId]);
 
   useEffect(() => {
-    if (quill === null || socket === null || !fileId || !user) return;
-    const selectionChangeHandler = (cursorId: string) => {
-      return (range: any, oldRange: any, source: any) => {
-        if (source === "user" && cursorId) {
-          socket.emit("send-cursor-move", range, fileId, cursorId);
-        }
-      };
-    };
+    if (quill === null || socket === null || !fileId || !user) {
+      return;
+    }
     const quillHandler = (delta: any, oldDelta: any, source: any) => {
       if (source !== "user") return;
       if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
@@ -392,11 +387,9 @@ const QuillEditor = ({ dirDetails, fileId, dirType }: QuillEditorProps) => {
       socket.emit("send-changes", delta, fileId);
     };
     quill.on("text-change", quillHandler);
-    quill.on("selection-change", selectionChangeHandler(user.id));
 
     return () => {
       quill.off("text-change", quillHandler);
-      quill.off("selection-change", selectionChangeHandler);
       if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
     };
   }, [quill, socket, fileId, user, details, folderId, workspaceId, dispatch]);

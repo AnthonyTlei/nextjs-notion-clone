@@ -21,7 +21,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  console.log(db);
+  // console.log(db);
   return (
     <html lang="en">
       <body className={twMerge("bg-background", dmSans.className)}>
