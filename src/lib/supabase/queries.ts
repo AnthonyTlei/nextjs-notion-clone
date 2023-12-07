@@ -191,6 +191,13 @@ export const removeCollaborators = async (
   });
 };
 
+export const findUser = async (userId: string) => {
+  const response = await db.query.users.findFirst({
+    where: (u, { eq }) => eq(u.id, userId),
+  });
+  return response;
+};
+
 export const getFolders = async (workspaceId: string) => {
   const isValid = validate(workspaceId);
   if (!isValid) return { data: null, error: "Error: Invalid workspace id" };

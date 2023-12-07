@@ -28,16 +28,19 @@ const ioHandler = (req: NextApiRequest, res: NextApiResponseServerIo) => {
     io.on("connection", (s) => {
       console.log("CONNECTED");
 
-      s.on('create-room', (fileId) => {
+      s.on("create-room", (fileId) => {
         console.log("CREATED ROOM");
         s.join(fileId);
       });
 
-      s.on('send-changes', (deltas, fileId) => {
-        console.log('CHANGE');
-        s.to(fileId).emit('receive-changes', deltas, fileId);
+      s.on("send-changes", (deltas, fileId) => {
+        console.log("CHANGE");
+        s.to(fileId).emit("receive-changes", deltas, fileId);
       });
 
+      s.on("send-cursor-move", (range, fileId, cursorId) => {
+        s.to(fileId).emit("receive-cursor-move", range, fileId, cursorId);
+      });
     });
     res.socket.server.io = io;
   }
