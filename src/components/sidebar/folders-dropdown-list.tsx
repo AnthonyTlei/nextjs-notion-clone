@@ -11,6 +11,7 @@ import { v4 } from "uuid";
 import { createFolder } from "@/lib/supabase/queries";
 import { useToast } from "../ui/use-toast";
 import Dropdown from "./Dropdown";
+import useSupabaseRealtime from "@/lib/hooks/useSupabaseRealtime";
 
 interface FoldersDropdownListProps {
   workspaceFolders: Folder[];
@@ -21,10 +22,11 @@ const FoldersDropdownList = ({
   workspaceFolders,
   workspaceId,
 }: FoldersDropdownListProps) => {
+  useSupabaseRealtime();
+
   const { state, dispatch, folderId } = useAppState();
   const { toast } = useToast();
   const [folders, setFolders] = useState(workspaceFolders);
-  const { subscription } = useSupabaseUser();
 
   useEffect(() => {
     if (workspaceFolders.length > 0) {
