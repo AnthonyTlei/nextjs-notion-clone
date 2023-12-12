@@ -1,3 +1,4 @@
+import { SubscriptionModalProvider } from "@/lib/providers/subscription-modal-provider";
 import { ReactNode } from "react";
 
 interface DashboardPageLayoutProps {
@@ -5,11 +6,15 @@ interface DashboardPageLayoutProps {
   params: any;
 }
 
-const DashboardPageLayout = ({
+const DashboardPageLayout = async ({
   children,
   params,
 }: DashboardPageLayoutProps) => {
-  return <main className="flex h-screen overflow-hidden">{children}</main>;
+  return (
+    <main className="over-hidden flex h-screen">
+      <SubscriptionModalProvider>{children}</SubscriptionModalProvider>
+    </main>
+  );
 };
 
 export default DashboardPageLayout;
