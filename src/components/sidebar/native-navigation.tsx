@@ -4,6 +4,7 @@ import CypressHomeIcon from "../icons/cypressHomeIcon";
 import CypressSettingsIcon from "../icons/cypressSettingsIcon";
 import CypressTrashIcon from "../icons/cypressTrashIcon";
 import Settings from "../settings/settings";
+import Trash from "../trash/trash";
 
 interface NativeNavigationProps {
   myWorkspaceId: string;
@@ -32,10 +33,12 @@ const NativeNavigation = ({
             <span>Settings</span>
           </li>
         </Settings>
-        <li className="group/native flex gap-2 text-Neutrals/neutrals-7 transition-all">
-          <CypressTrashIcon />
-          <span>Trash</span>
-        </li>
+        <Trash>
+          <li className="group/native flex gap-2 text-Neutrals/neutrals-7 transition-all">
+            <CypressTrashIcon />
+            <span>Trash</span>
+          </li>
+        </Trash>
       </ul>
     </nav>
   );
