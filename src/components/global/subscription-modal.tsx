@@ -10,13 +10,18 @@ import {
   DialogTitle,
 } from "../ui/dialog";
 import { useSupabaseUser } from "@/lib/providers/supabase-user-provider";
-import { formatPrice } from "@/lib/utils";
+import { formatPrice, postData } from "@/lib/utils";
 import { Button } from "../ui/button";
 import Loader from "./Loader";
 import { Price, ProductWirhPrice } from "@/lib/supabase/supabase.types";
 import { useToast } from "../ui/use-toast";
+import { getStripe } from "@/lib/stripe/stripeClient";
 
-const SubscriptionModal = () => {
+interface SubscriptionModalProps {
+  products: ProductWirhPrice[];
+}
+
+const SubscriptionModal = ({ products }: SubscriptionModalProps) => {
   const { open, setOpen } = useSubscriptionModal();
   const { toast } = useToast();
   const { subscription } = useSupabaseUser();
@@ -36,6 +41,14 @@ const SubscriptionModal = () => {
         setIsLoading(false);
         return;
       }
+      const { sessionId } = await postData({
+        url: "/api/create-checkout-session",
+        data: { price },
+      });
+
+      console.log("Getting Checkout for stripe");
+      const stripe = await getStripe();
+      stripe?.redirectToCheckout({ sessionId });
     } catch (error) {
       toast({ title: "Oppse! Something went wrong.", variant: "destructive" });
     } finally {
@@ -55,7 +68,7 @@ const SubscriptionModal = () => {
           <DialogDescription>
             To access Pro features you need to have a paid plan.
           </DialogDescription>
-          {/* {products.length
+          {products.length
             ? products.map((product) => (
                 <div
                   className="flex items-center justify-between"
@@ -76,8 +89,7 @@ const SubscriptionModal = () => {
                   ))}
                 </div>
               ))
-            : ""} */}
-          {/* No Products Available */}
+            : ""}
         </DialogContent>
       )}
     </Dialog>
